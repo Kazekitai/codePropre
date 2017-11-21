@@ -1,48 +1,54 @@
 package ex3;
 
+import java.util.HashMap;
+
 public class Zoo {
 
+	private HashMap<String, IZone> zones = new HashMap<String, IZone>();
 	private String nom;
-	private SavaneAfricaine savaneAfricaine;
-	private ZoneCarnivore zoneCarnivore;
-	private FermeReptile fermeReptile;
-	private Aquarium aquarium;
-	
-	public Zoo(String nom){
+
+	public Zoo(String nom) {
 		this.nom = nom;
-	}
-	
-	public void addAnimal(String nomAnimal, String typeAnimal, String comportement){
-		if (typeAnimal.equals("MAMMIFERE") && comportement.equals("CARNIVORE")){
-			zoneCarnivore.addAnimal(typeAnimal, nomAnimal, comportement);
-		}
-		else if (typeAnimal.equals("MAMMIFERE") && comportement.equals("HERBIVORE")){
-			savaneAfricaine.addAnimal(typeAnimal, nomAnimal, comportement);
-		}
-		else if (typeAnimal.equals("REPTILE")){
-			fermeReptile.addAnimal(typeAnimal, nomAnimal, comportement);
-		}
-		else if (typeAnimal.equals("POISSON")){
-			aquarium.addAnimal(typeAnimal, nomAnimal, comportement);
-		}
-	}
-	
-	public void afficherListeAnimaux(){
-		savaneAfricaine.afficherListeAnimaux();
-		zoneCarnivore.afficherListeAnimaux();
-		fermeReptile.afficherListeAnimaux();
-		aquarium.afficherListeAnimaux();
+		zones.put("aquarium", new Aquarium());
+		zones.put("carnivore", new ZoneCarnivore());
+		zones.put("savane", new SavaneAfricaine());
+		zones.put("reptile", new FermeReptile());
 	}
 
-	/** Getter for nom
+	/* METHODES */
+
+	/**
+	 * Ajoute un animal dans la zone qui lui ait attribuées selon des critères
+	 * d'acceptations
+	 * 
+	 * @param animal
+	 */
+	public void addAnimal(Animal animal) {
+		zones.entrySet().stream().forEach(z -> z.getValue().addAnimal(animal));
+	}
+
+	/**
+	 * Affiche la liste des animaux
+	 */
+	public void afficherListeAnimaux() {
+		System.out.println("\n ****** liste des animaux ******");
+		zones.entrySet().stream().forEach(z -> z.getValue().afficherListeAnimaux());
+	}
+
+	/**
+	 * Getter pour le nom de l'animal (espèce)
+	 * 
 	 * @return the nom
 	 */
 	public String getNom() {
 		return nom;
 	}
 
-	/** Setter
-	 * @param nom the nom to set
+	/**
+	 * Setter
+	 * 
+	 * @param nom
+	 *            le nom de l'animal (espèce)
 	 */
 	public void setNom(String nom) {
 		this.nom = nom;

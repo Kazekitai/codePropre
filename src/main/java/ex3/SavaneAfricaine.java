@@ -1,30 +1,50 @@
 package ex3;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class SavaneAfricaine {
+public class SavaneAfricaine implements IZone {
 
-	private List<String> types;
-	private List<String> noms;
-	private List<String> comportements;
-	
-	public void addAnimal(String typeAnimal, String nomAnimal, String comportement) {
-		types.add(typeAnimal);
-		noms.add(nomAnimal);
-		comportements.add(comportement);
+	/* ATTRIBUTS */
+
+	/**
+	 * Liste des animaux dans l'aquarium
+	 */
+	private List<Animal> liste = new ArrayList<Animal>();
+
+	/* CONSTRUCTEUR */
+
+	/**
+	 * Constructeur par défaut
+	 */
+	public SavaneAfricaine() {
 	}
-	
-	public void afficherListeAnimaux(){
-		for (String nom: noms){
-			System.out.println(nom);
+
+	/* METHODES */
+
+	/**
+	 * Ajoute un animal dans l'aquarium
+	 */
+	public void addAnimal(Animal animal) {
+		if (animal.getType() == Type.MAMMIFERE && animal.getComportement() == Comportement.HERBIVORE) {
+			liste.add(animal);
 		}
 	}
-	
-	public int compterAnimaux(){
-		return noms.size();
+
+	/**
+	 * Affiche la liste des animaux présents dans l'aquarium
+	 */
+	public void afficherListeAnimaux() {
+		System.out.println("\n**** Les animaux de la savane africaine ****");
+		if (liste != null) {
+			liste.stream().forEach(a -> System.out.println(a.getNom()));
+		}
 	}
-	
-	public int calculerKgsNourritureParJour(){
-		return noms.size() * 10;
+
+	/**
+	 * Calcul le poids de la nourriture par jour (en Kgs)
+	 */
+	public double calculerKgsNourritureParJour() {
+		return liste.size() * 10;
 	}
 }
